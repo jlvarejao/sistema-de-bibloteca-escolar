@@ -1,0 +1,71 @@
+
+{% extends "base.html" %}
+
+{% block titulo %}Livros - Biblioteca Escolar{% endblock %}
+
+{% block conteudo %}
+<section>
+  <h2>Cadastrar livro</h2>
+
+  <form method="post">
+    <label>Título
+      <input name="titulo" maxlength="200" required>
+    </label>
+
+    <label>Autor
+      <input name="autor" maxlength="150" required>
+    </label>
+
+    <label>Categoria
+      <input name="categoria" maxlength="100">
+    </label>
+
+    <label>Quantidade de exemplares
+      <input type="number" name="quantidade"
+             min="1" value="1" required>
+    </label>
+
+    <button type="submit">Cadastrar livro</button>
+  </form>
+</section>
+
+<section>
+  <h2>Acervo de livros</h2>
+
+  <form method="get">
+    <label>Pesquisar por título ou autor
+      <input name="q" value="{{ termo }}">
+    </label>
+    <button type="submit">Pesquisar</button>
+  </form>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Autor</th>
+          <th>Categoria</th>
+          <th>Total</th>
+          <th>Disponíveis</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for livro in livros %}
+        <tr>
+          <td>{{ livro.titulo }}</td>
+          <td>{{ livro.autor }}</td>
+          <td>{{ livro.categoria or '-' }}</td>
+          <td>{{ livro.quantidade }}</td>
+          <td>{{ livro.disponiveis }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="5">Nenhum livro encontrado.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,99 @@
+
+{% extends "base.html" %}
+
+{% block titulo %}Relatórios - Biblioteca Escolar{% endblock %}
+
+{% block conteudo %}
+<section>
+  <h2>Empréstimos ativos: {{ ativos|length }}</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Livro</th>
+          <th>Aluno</th>
+          <th>Turma</th>
+          <th>Retirada</th>
+          <th>Prazo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for e in ativos %}
+        <tr>
+          <td>{{ e.titulo }}</td>
+          <td>{{ e.nome }}</td>
+          <td>{{ e.turma }}</td>
+          <td>{{ e.data_emprestimo }}</td>
+          <td>{{ e.data_prevista }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="5">Não há empréstimos ativos.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Empréstimos atrasados: {{ atrasados|length }}</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Livro</th>
+          <th>Aluno</th>
+          <th>Prazo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for e in atrasados %}
+        <tr>
+          <td>{{ e.titulo }}</td>
+          <td>{{ e.nome }}</td>
+          <td>{{ e.data_prevista }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="3">Não há empréstimos atrasados.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Livros devolvidos</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Livro</th>
+          <th>Aluno</th>
+          <th>Retirada</th>
+          <th>Devolução</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for e in devolvidos %}
+        <tr>
+          <td>{{ e.titulo }}</td>
+          <td>{{ e.nome }}</td>
+          <td>{{ e.data_emprestimo }}</td>
+          <td>{{ e.data_devolucao }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="4">Nenhuma devolução registrada.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,35 @@
+
+{% extends "base.html" %}
+
+{% block titulo %}Início - Biblioteca Escolar{% endblock %}
+
+{% block conteudo %}
+<h2>Painel inicial</h2>
+
+<div class="cards">
+  <div class="card">
+    Exemplares no acervo
+    <strong>{{ total_livros }}</strong>
+  </div>
+
+  <div class="card">
+    Alunos cadastrados
+    <strong>{{ total_alunos }}</strong>
+  </div>
+
+  <div class="card">
+    Empréstimos ativos
+    <strong>{{ ativos }}</strong>
+  </div>
+
+  <div class="card">
+    Empréstimos atrasados
+    <strong>{{ atrasados }}</strong>
+  </div>
+</div>
+
+<section>
+  <h2>Bem-vindo!</h2>
+  <p>Utilize o menu para administrar o acervo escolar.</p>
+</section>
+{% endblock %}

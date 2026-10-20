@@ -1,0 +1,95 @@
+
+{% extends "base.html" %}
+
+{% block titulo %}Empréstimos - Biblioteca Escolar{% endblock %}
+
+{% block conteudo %}
+<section>
+  <h2>Registrar empréstimo</h2>
+
+  {% if livros and alunos %}
+  <form method="post">
+    <label>Livro
+      <select name="livro_id" required>
+        {% for livro in livros %}
+        <option value="{{ livro.id }}">
+          {{ livro.titulo }} ({{ livro.disponiveis }} disponível(is))
+        </option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label>Aluno
+      <select name="aluno_id" required>
+        {% for aluno in alunos %}
+        <option value="{{ aluno.id }}">
+          {{ aluno.nome }} — {{ aluno.turma }}
+        </option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label>Data prevista para devolução
+      <input type="date" name="data_prevista"
+             min="{{ hoje }}" required>
+    </label>
+
+    <button type="submit">Registrar empréstimo</button>
+  </form>
+  {% else %}
+  <p>Cadastre pelo menos um livro disponível e um aluno.</p>
+  {% endif %}
+</section>
+
+<section>
+  <h2>Histórico de empréstimos</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Livro</th>
+          <th>Aluno</th>
+          <th>Retirada</th>
+          <th>Prazo</th>
+          <th>Situação</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for e in emprestimos %}
+        <tr>
+          <td>{{ e.titulo }}</td>
+          <td>{{ e.nome }}</td>
+          <td>{{ e.data_emprestimo }}</td>
+          <td>{{ e.data_prevista }}</td>
+          <td>
+            {% if e.data_devolucao %}
+              Devolvido
+            {% elif e.data_prevista < hoje %}
+              Atrasado
+            {% else %}
+              Emprestado
+            {% endif %}
+          </td>
+          <td>
+            {% if not e.data_devolucao %}
+            <form method="post"
+                  action="{{ url_for('devolver', emprestimo_id=e.id) }}">
+              <button type="submit">Devolver</button>
+            </form>
+            {% else %}
+              {{ e.data_devolucao }}
+            {% endif %}
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="6">Nenhum empréstimo registrado.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

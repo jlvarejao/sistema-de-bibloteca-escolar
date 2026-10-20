@@ -1,0 +1,31 @@
+
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Biblioteca Escolar{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Biblioteca Escolar</h1>
+    <nav>
+      <a href="{{ url_for('inicio') }}">Início</a>
+      <a href="{{ url_for('livros') }}">Livros</a>
+      <a href="{{ url_for('alunos') }}">Alunos</a>
+      <a href="{{ url_for('emprestimos') }}">Empréstimos</a>
+      <a href="{{ url_for('relatorios') }}">Relatórios</a>
+    </nav>
+  </header>
+
+  <main>
+    {% for mensagem in get_flashed_messages() %}
+      <div class="mensagem">{{ mensagem }}</div>
+    {% endfor %}
+
+    {% block conteudo %}{% endblock %}
+    <footer>Sistema de gestão da biblioteca escolar</footer>
+  </main>
+</body>
+</html>
